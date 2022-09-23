@@ -43,15 +43,15 @@
             v-for="(menuItem, index) in menuItems"
             :key="index"
           >
-            <li>
+            <li v-if="has_permission(menuItem)">
               <router-link :to="menuItem.link">
                 <i
                   class="bx"
                   :class="menuItem.icon || 'bx-square-rounded'"
                 />
                 <span class="links_name">{{ menuItem.name }}</span>
-              </router-link>
               <span class="tooltip">{{ menuItem.tooltip || menuItem.name }}</span>
+              </router-link>
             </li>
           </span>
         </ul>
@@ -73,13 +73,13 @@
           />
           <div class="name_job">
             <div class="name">
-              <h2 style="text-transform: capitalize;">{{ this.user.username }}</h2>
+              <h3 >{{ this.user.username }}</h3>
             </div>
           </div>
         </div>
         <i
           v-if="isExitButton"
-          class="bx bx-log-out"
+          class="bx bx-log-out-circle "
           id="log_out"
           @click.stop="loggout"
         />
@@ -137,18 +137,22 @@
             name: 'Users',
             tooltip: 'User',
             icon: 'bx-user',
+            user:'admin'
           },
           {
             link: '/stock1',
             name: 'Stock Centrale',
             tooltip: 'Messages',
-            icon: 'bx-chat',
+            icon: 'bx-store',
+            user:'admin'
+            
+
           },
           {
             link: '/stock2',
             name: 'Stock',
             tooltip: 'Messages',
-            icon: 'bx-chat',
+            icon: 'bx-store-alt',
           },
           {
             link: '/statistic',
@@ -156,12 +160,12 @@
             tooltip: 'Analytics',
             icon: 'bx-pie-chart-alt-2',
           },
-          {
-            link: '#',
-            name: 'File Manager',
-            tooltip: 'Files',
-            icon: 'bx-folder',
-          },
+          // {
+          //   link: '#',
+          //   name: 'File Manager',
+          //   tooltip: 'Files',
+          //   icon: 'bx-folder',
+          // },
           {
             link: '/orders',
             name: 'Orders',
@@ -172,13 +176,13 @@
             link: '/command',
             name: 'Commande',
             tooltip: 'commande',
-            icon: 'bx-grid-alt',
+            icon: 'bx-command',
           },
           {
-            link: '/settings',
-            name: 'Setting',
+            link: '/bon-commande',
+            name: 'Bon commande',
             tooltip: 'Setting',
-            icon: 'bx-cog',
+            icon: 'bx-command',
           },
         ],
       },
@@ -301,6 +305,16 @@
       }
     },
     methods:{
+      has_permission(menuItem){
+        // console.log(menuItem.name, this.$store.state.user.groups.includes(menuItem.user), !menuItem.user)
+        if(!menuItem.user){
+          return true
+        }
+        if(this.$store.state.user.groups.includes(menuItem.user)){
+          return true
+        }
+        return false
+      },
       loggout(){
         if (confirm("Are you sure you wanna logout?")) {
           this.$store.state.user = null;
@@ -593,11 +607,11 @@
   }
   #my-scroll::-webkit-scrollbar{
     display:none;
-    /* background-color: rgba(255, 255, 255, 0.2); 
+     background-color: rgba(255, 255, 255, 0.2); 
     width: 10px;
-    border-radius:5px  */
+    border-radius:5px  
   }
-  /* #my-scroll::-webkit-scrollbar-thumb{
+   #my-scroll::-webkit-scrollbar-thumb{
     background-color: red;
     border-radius:5px 
   }
@@ -606,7 +620,7 @@
   }
   #my-scroll::-webkit-scrollbar-button:vertical:end:increment{
     display:none;
-  } */
+  } 
   @media (max-width: 420px) {
     .sidebar li .tooltip {
       display: none;
