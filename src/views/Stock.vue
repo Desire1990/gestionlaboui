@@ -2,11 +2,12 @@
   <div class="parent">
   	 <div class="form-inline my-2 my-lg-0 top" style="padding:20px;">
         <input class="form-control mr-sm-2" type="text" placeholder="Search" v-model="search_term" aria-label="Search">
+        <button type="reset" @click="search_term=''">&times</button>
 
       </div>
-<!--     <div class="top">
-      <SearchBar :show_date="false" v-model="search_term"/>
-    </div> -->
+    <!-- <div class="top"> -->
+      <!-- <SearchBar :show_date="false" @searched="performFilter" /> -->
+    <!-- </div> -->
 		<div class="btns">
 			<button @click="generateCSV"><fa icon="download"/> Download</button>
 			<button @click.prevent="">
@@ -23,6 +24,7 @@
           <thead>
             <tr class="panier-item">
               <th>#</th>
+              <th>Categorie</th>
               <th>Reference</th>
               <th>Materiel</th>
               <th>Designation</th>
@@ -30,13 +32,14 @@
               <th>Date de Peremption</th>
               <th>Status</th>
               <th>
-              	<button @click="add_mode=false">Add</button>
+              	<button @click="add_mode=true">Create</button>
               </th>
             </tr>
           </thead>
           <tbody id="paiements">
-            <tr v-for="item in items.results" :key='item.id' :class='level(item.quantite)'>
-              <td>{{ item.id }}</td>
+            <tr v-for="(item, index) in items.results" :key='item.id' :class='level(item.quantite)'>
+              <td>{{ index+1 }}</td>
+              <td>{{ item.category.name }}</td>
               <td>{{ item.reference }}</td>
               <td>{{ item.materiel }}</td>
               <td>{{ item.designation }}</td>
@@ -46,7 +49,7 @@
               <td>
                 <div class="btns" >
                   <button @click.prevent="startEdit(item) ">Edit</button>
-                  <button @click.prevent="startCommande(item) ">Update</button>
+                  <button @click.prevent="startCommande(item) ">Add</button>
                 </div>
               </td>
             </tr>
@@ -60,12 +63,13 @@
 </template>
 <script>
 import axios from "axios"
+import SearchBar from "../components/searchbar.vue";
 import EditDialog from "../components/dialog_edit_produit.vue";
 import ProduitDialog from "../components/dialog_produit.vue";
 import AchatDialog from "../components/dialog_commande.vue";
 
 export default{
-	components:{EditDialog, AchatDialog, ProduitDialog},
+	components:{EditDialog, AchatDialog, ProduitDialog, SearchBar},
 	data(){
 		return {
 			csvData : {},
