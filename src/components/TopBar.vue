@@ -14,19 +14,18 @@
                             <a class="fa-solid fa-cart-shopping"></a>
                         </div>
                       <div>
-                        <fa icon="fa-shopping-cart"  style="font-size:48px;color:white;"></fa>
-                        <i class="fa-shopping-cart">({{cartTotalLength}})</i>
+                        <i class="fa fa-shopping-cart" style="font-size:48px">({{cartTotalLength}})</i>
 
                       </div>
                     </div>
                 </router-link>
                 <div class="user-wrapper"  @click="loggout">
                     <div>
-                        <a class="fas fa-sign-out"  style="font-size:48px;color:red"></a>
+                        <a class="fa fa-sign-out desos"  style="font-size:48px; color:red"></a>
                     </div>
-              <div class="loggout" @click="loggout">
-                <fa icon="power-off" />
-              </div>
+              <!-- <div class=" desos bx bx-log-out" @click="loggout" style="font-size:36px;color:white"> -->
+                <!-- <fa icon="power-off" /> -->
+              <!-- </div> -->
                 </div>
             </header>
     </div>
@@ -429,6 +428,9 @@ input {
 }
 .loggout:hover{
   color: #fff;
+}
+.desos:hover{
+    background-color: #777;
 }
 </style>
 
