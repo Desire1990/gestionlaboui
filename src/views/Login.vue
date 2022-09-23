@@ -4,12 +4,13 @@
             <div class="inner-block">
                 <form class="login">
                     <center>
-                        <h1>Gestion Labo</h1><hr>
+                        <img src="../assets/img/download.jpeg" alt="" width="80px" height="80px">
+                        <h1 style="color:var(--primary); font-size: 36px;">Gestion Laboratoire</h1>
                     </center>
 
                     <div class="form-group">
                         <label><h3>Username</h3></label>
-                        <input type="email" name="email" placeholder="email" class="form-control form-control-lg" required id="id_mail" v-model='username' autocomplete="on" />
+                        <input type="email" name="email" placeholder="Username" class="form-control form-control-lg" required id="id_mail" v-model='username' autocomplete="on" />
                     </div>
 
                     <div class="form-group">
@@ -18,7 +19,7 @@
                     </div>
                     <label for="id_password" v-if='logs.length>0' style="color:red">{{logs}}</label>
 
-                    <button type="submit" class="btn btn-dark btn-lg btn-block" @click.prevent='login'>Sign In</button>
+                    <button type="submit" class="btn btn-lg btn-block btns" @click.prevent='login'>Sign In</button>
 
                     <p class="forgot-password text-right mt-2 mb-4">
                         <router-link to="/forgot-password"><strong>Forgot password ?</strong></router-link>
@@ -86,11 +87,10 @@ export default {
 };
 </script>
 <style scoped>
-    @import "bootstrap/dist/css/bootstrap.min.css";
 .centered{
     display: flex;
     justify-content: center;
-    margin-top: 100px;
+    padding-top: 60px;
 }
 form{
     background-color: white;
@@ -101,13 +101,11 @@ form{
 }
 .btns{
     display: flex;
-    justify-content: flex-end;
-}
-center{
-    margin-top: 10px;
+    justify-content: center;
+    color: white;
+    background-color: var(--primary);
 }
 h2, a{
     color: var(--primary);
 }
-</style>
 </style>
