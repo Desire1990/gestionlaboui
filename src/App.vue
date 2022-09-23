@@ -21,7 +21,7 @@ export default {
   name: 'App',
   data: () => {
     return {
-      navOpen: false
+      navOpen: true
     }
   },
   components: {
