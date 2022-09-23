@@ -1,11 +1,14 @@
 <template>
   <div class="parent">
-  	 <div class="form-inline my-2 my-lg-0 top" style="padding-top:20px;">
+      <h3>Mes commandes</h3>
+  	 <div class="form-inline my-2 my-lg-0 top" style="float: left; padding-left: 20px;">
         <input class="form-control mr-sm-2" type="text" placeholder="Search" v-model="search_term" aria-label="Search">
 
       </div>
+       <!-- <button class="btn btn-outline-success desos" @click.prevent="envoyer">Envoyer</button> -->
+       <i class="fa fa-paper-plane btn desos" @click.prevent="envoyer" aria-hidden="true"></i>
       <br>
-		<div class="scrollable-tab">
+		<div class="scrollable-tab" style="padding-top:10px">
         <table class="table paiements">
           <thead>
             <tr class="panier-item">
@@ -15,40 +18,51 @@
               <th>Numero de Commande</th>
               <th>Date commande</th>
               <th>Status</th>
+              <th>Action</th>
               <th></th>
             </tr>
           </thead>
           <tbody id="paiements">
-            <tr v-for="(item, index) in items" :key='item.id'>
+            <tr v-for="(commande, index) in items">
               <td>{{ index+1 }}</td>
-              <td>{{ item.user.username }}</td>
-              <td>{{ item.laboratoire.name }}</td>
-              <td>{{ item.num_commande }}</td>
-              <td>{{ datetime(item.date_commande) }}</td>
-              <td>{{item.status}}</td>
+              <td>{{ commande.user.username }}</td>
+              <td>{{ commande.laboratoire.name }}</td>
+              <td>{{ commande.num_commande }}</td>
+              <td>{{ datetime(commande.date_commande) }}</td>
+              <td>{{commande.status}}</td>
+              <td>
+                  <i class="fa fa-edit" style="color:blue;font-size: 24px; padding-right: 10px;" aria-hidden="true" @click.prevent="showDetails(commande)"></i>
+              		
+
+                  <i class="fa fa-trash" style="color:red;font-size: 24px;" aria-hidden="true" @click.prevent="Delete(commande)"></i>
+                  	
+              </td>
               <td>
                 <div class="btns" >
-                  <button @click.prevent="startEdit(item)">Detail</button>
+                  <button @click.prevent="showDetails(commande)">Detail</button>
                 </div>
               </td>
             </tr>
         </tbody>
       </table>
 	</div>
-  	<EditDialog :visible="edit_mode" :produit="active_item" @close="exitEdition"/>
+  	<DetailsDialog :visible='details_opened' :commande='active_commande' @close="details_opened=false"/>
   </div>
 </template>
 <script>
 import axios from "axios"
-import EditDialog from "../components/dialog_edit_produit.vue";
+import DetailsDialog from "../components/detail_commande.vue";
 
 export default{
-	components:{EditDialog},
+	components:{DetailsDialog},
 	data(){
 		return {
 			csvData : {},
 			items:this.$store.state.commandes,
 			active_item:{},
+			commandes : this.$store.state.commandes,
+      details_opened:false,
+      active_commande :{},
 			edit_mode:false, achat_mode:false, add_mode:false, search_term:''
 		}
 	},
@@ -61,6 +75,20 @@ export default{
         }
     },
   methods: {
+  	envoyer(){
+
+  	},
+    Delete(com) {
+        if (confirm('Delete ' + com.id)) {
+            axios.delete(this.$store.state.url+`/commande/${com.id}/`, this.header)
+                .then( response =>                     
+                {
+                    this.fetchCommandes()
+                    return response
+                }
+            );
+        }
+    },
     dosearch(value){
         axios.get(this.$store.state.url+`/commande/?search=${this.search_term}`, this.header)
         .then((response) => {
@@ -95,6 +123,10 @@ export default{
 			this.achat_mode = false;
 			this.add_mode = false;
 		},
+		showDetails(commande){
+      this.active_commande = commande;
+      this.details_opened=true;
+    },
 		startEdit(item){
 			this.active_item = item;
 			this.edit_mode = true;
@@ -372,5 +404,18 @@ td{
 	padding: 5px;
 }
 @media screen and (max-width: 650px){
+}
+.desos{
+	float: right;
+	margin-right: 40px;
+	background-color: teal;
+	color: white;
+	font-size: 36px;
+}
+h3{
+	text-align: center;
+	font-size: 36px;
+	color: teal;
+
 }
 </style>

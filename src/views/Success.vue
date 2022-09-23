@@ -1,9 +1,9 @@
 <template>
     <div class="page-success">
         <div class="columns is-multiline">
-            <div class="column is-12">
+            <div class="column is-12 content">
                 <h1 class="title">Thank You</h1>
-                <p>Your order will be processed withnin 48 hourse</p>
+                <p>Your order will be processed!!<br>Welcome back ...</p>
             </div>
         </div>
     </div>
@@ -17,3 +17,9 @@ export default {
     }
 }
 </script>
+<style scoped>
+    .content{
+        text-align: center;
+        padding: 50px;
+    }
+</style>
