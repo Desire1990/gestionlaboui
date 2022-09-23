@@ -2,28 +2,38 @@
 	<div :class="{popup:true, active:visible}" @click="close">
 		<div class="popup-body" @click.prevent.stop>
 			<center>
-				<h3>Modifier {{produit.nom}}</h3>
+				<h3>Modifier {{produit.materiel}}</h3>
 			</center>
 			<form method="post">
 				<div class="field">
-					<label for="id_unite">Nom:</label>
-					<input type="text" v-model="new_produit.nom" id="id_unite">
+					<label for="id_unite">Materiel:</label>
+					<input type="text" v-model="new_produit.materiel" id="id_unite">
 				</div>
 				<div class="field">
-					<label for="id_unite">Unite d'achat:</label>
-					<input type="text" v-model="new_produit.unite" id="id_unite">
+					<label for="id_unite">Reference</label>
+					<input type="text" v-model="new_produit.reference" id="id_unite">
 				</div>
 				<div class="field">
-					<label for="id_sortant">Unité de vente:</label>
-					<input type="text" v-model="new_produit.unite_sortant" id="id_sortant">
+					<label for="id_prix">Quantite:</label>
+					<input type="number" name="prix" placeholder="prix" required="" id="id_quantite" v-model="new_produit.quantite">
 				</div>
 				<div class="field">
-					<label for="id_rapport">Rapport:</label>
-					<input type="text" v-model="new_produit.rapport" id="id_rapport">
+					<label for="id_sortant">Unité:</label>
+					<input type="text" v-model="new_produit.unite" id="id_sortant" placeholder="kg, l, g, mg, ml, ...">
 				</div>
 				<div class="field">
-					<label for="id_prix">Nouveau prix:</label>
-					<input type="number" name="prix" placeholder="prix" required="" id="id_quantite" v-model="new_produit.prix_vente">
+					<label for="status">Status:</label>
+					<select v-model="new_produit.status">
+						<option disabled value="">Selectionnez le status du materiel ...</option>
+					  <option>fonctionel</option>
+					  <option>non-fonctionel</option>
+					  <option>reparable</option>
+					</select>
+					<input type="text" v-model="new_produit.status" id="id_sortant" placeholder="kg, l, g, mg, ml, ...">
+				</div>
+				<div class="field">
+					<label for="id_rapport">Date de Peremption:</label>
+					<input type="text" v-model="new_produit.date_peremption" id="id_rapport">
 				</div>
 				<div class="buttons">
 					<div class="logs">{{logs}}</div>
@@ -67,10 +77,10 @@ export default {
 					let x = produits[i];
 					if(x.id==this.produit.id){
 						this.$store.state.produits[i] = response.data;
-						break;
+						this.$emit("close");
+						// break;
 					}
 				}
-				this.$emit("close");
 			}).catch((error) => {
 				console.error(error);
 			})
