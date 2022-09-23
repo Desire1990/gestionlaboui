@@ -12,7 +12,7 @@
                             <th>#</th>
                             <th>Product</th>
                             <th>Reference</th>
-                            <th>Qte en stock</th>
+                            <th>Qtes en stock</th>
                             <th>Qte commande</th>
                             <th>Action</th>
                         </tr>
@@ -90,4 +90,9 @@ export default {
     h1{
         text-align: center;
     }
+    .btn-success {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
 </style>

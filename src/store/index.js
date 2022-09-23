@@ -7,6 +7,7 @@ state: {
     // url:'/api',
     url: 'http://localhost:8000/api',
     // url: 'https://redgoldinvest.com/api',
+    users:[],
     domains:[],
     categories:[],
     laboratoires:[],
@@ -46,6 +47,9 @@ state: {
       }
 
       localStorage.setItem('cart', JSON.stringify(state.cart))
+    },
+    setIsLoading(state, status) {
+      state.isLoading = status
     },
     clearCart(state) {
       state.cart = { items: []}

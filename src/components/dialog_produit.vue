@@ -7,31 +7,58 @@
 			</center>
 			<form method="post">
 				<div class="field">
-					<label for="id_nom">Nom:</label>
-					<input type="text" v-model="produit.nom" id="id_nom" placeholder="le nom du produit">
+          <label for="id_nom">Nom du Laboratoire</label><br>
+          <input type="text" list="noms" v-model="laboratoire.name"
+            id="id_nom" @change="setId">
+        </div>
+          <datalist id="noms">
+            <option v-for="labo in categories.results" :value="labo.name"/>
+          </datalist>
+            
+				<div class="field">
+					<label for="id_nom">Materiel:</label>
+					<input type="text" v-model="produit.materiel" id="id_nom" placeholder="le nom du produit">
 				</div>
 				<div class="field">
-					<label for="id_entrant">Unité d'achat:</label>
-					<input type="text" v-model="produit.unite" id="id_entrant" placeholder="exemples: kg,carton,casier...">
+					<label for="id_nom">Reference:</label>
+					<input type="text" v-model="produit.reference" id="id_nom" placeholder="la reference du produit">
 				</div>
 				<div class="field">
-					<label for="id_sortant">Unité de vente:</label>
-					<input type="text" v-model="produit.unite_sortant" id="id_sortant"
-						:placeholder="unite_sortant">
+					<label for="id_nom">Designation:</label>
+					<input type="text" v-model="produit.designation" id="id_nom" placeholder="le description du produit">
 				</div>
 				<div class="field">
-					<label for="id_rapport">rapport:</label>
-					<input type="number" v-model="produit.rapport" id="id_rapport"
-						:placeholder="rapport">
+					<label for="id_nom">Quantite:</label>
+					<input type="number" v-model="produit.quantite" id="id_nom" placeholder="le description du produit">
 				</div>
 				<div class="field">
-					<label for="id_prix">Prix de vente:</label>
-					<input type="number" name="prix" placeholder="prix de vente" id="id_prix"
-						v-model="produit.prix_vente">
+					<label for="id_entrant">Unité :</label>
+					<select name="unite" id="" v-model="produit.unite" value="Selectionnez l'unite">
+					<option disabled value="Selectionnez l'unite">Selectionnez l'unite ...</option>
+					  <option>kg</option>
+					  <option>g</option>
+					  <option>pc(s)</option>
+					  <option>l</option>
+					  <option>ml</option>
+					</select>		
+				</div>
+				<div class="field">
+					<label for="id_entrant">Status :</label>
+					<select name="status" id="" v-model="produit.status" value='Selectionnez le status du materiel'>
+						<option disabled value=" ">Selectionnez le status du materiel ...</option>
+					  <option>fonctionel</option>
+					  <option>non-fonctionel</option>
+					  <option>reparable</option>
+					</select>				
+				</div>
+				<div class="field">
+					<label for="id_prix">date de peremption:</label>
+					<input type="date" name="prix" placeholder="date de peremption" id="id_prix"
+						v-model="produit.date_peremption">
 				</div>
 				<div class="logs">{{logs}}</div>
 				<div class="buttons">
-					<button @click.prevent="generateCSV">
+	<!-- 				<button @click.prevent="generateCSV">
 						<fa icon="download"/> Model
 					</button>
 					<button @click.prevent="onPickFile">
@@ -40,7 +67,7 @@
 					<input type="file" style="display: none"
 						ref="fileInput" accept=".csv"
 						@change="loadCSV">
-
+ -->
 					<button @click.prevent="createProduct" ref="submit">
 						Créer
 					</button>
@@ -58,6 +85,9 @@ export default {
 	},
 	data(){
 		return {
+			laboratoire:{
+				name:''
+			},
 			logs:"", produit:{},
 			new_price:"", csv_array:[],
 			csvData :{ size:0, fileData:[]}
@@ -75,6 +105,9 @@ export default {
 		}
 	},
 	computed:{
+		categories(){
+      return this.$store.state.categories
+    },
 		rapport(){
 			let str = "1 "+this.produit.unite+
 				" vaut combien de "+this.produit.unite_sortant+"?"
@@ -92,7 +125,33 @@ export default {
 			}
 		}
 	},
+	 mounted() {
+        if(this.categories.length<1){
+          axios.get(this.$store.state.url+'/category/', this.headers)
+          .then((response) => {
+            this.$store.state.categories = response.data;
+          }).catch((error) => {
+          });
+        }
+
+    },
 	methods: {
+    setId(){
+      for(let laboratoire of this.$store.state.categories){
+        if (laboratoire.id == this.laboratoire.id) {
+          this.laboratoire.name = laboratoire.name;
+          return;
+        }
+      }
+    },
+    setName(){
+      for(let laboratoire of this.$store.state.categories){
+        if (laboratoire.name == this.laboratoire.name) {
+          this.laboratoire.id = laboratoire.id;
+          return;
+        }
+      }
+    },
 		close(){
 			this.$emit("close");
 		},
@@ -107,30 +166,48 @@ export default {
 			})
 		},
 		createProduct(){
-			if(this.csv_array.length>0){
-				this.uploadCSV();
-				return;
-			}
-			if(!this.produit.nom){
-				this.logs = "le nom est obligatoire"
+			// if(this.csv_array.length>0){
+			// 	this.uploadCSV();
+			// 	return;
+			// }
+			let data={}	
+			if(!this.produit.materiel){
+				this.logs = "le materiel est obligatoire"
 				return;
 			}
 			if(!this.produit.unite){
-				this.logs = "l'unité d'achat est obligatoire"
+				this.logs = "l'unité est obligatoire"
 				return;
 			}
-			if(!this.produit.rapport != !this.produit.unite_sortant){
-				this.logs = "le rapport et l'unité sortant vont de pair"
+			if(!this.produit.date_peremption){
+				this.logs = "la date de peremption est obligatoire"
 				return;
 			}
-			if(!this.produit.prix_vente){
-				this.produit.prix_vente = 0;
+			if(!this.produit.designation){
+				this.logs = "la date est obligatoire"
+				return;
+			}
+			if(!this.produit.status){
+				this.logs = "status est obligatoire"
+				return;
+			}
+			if(!this.produit.reference){
+				this.logs = "la reference est obligatoire"
+				return;
+			}
+			if(!this.produit.quantite){
+				this.produit.quantite = 0;
+				this.logs = ""
+			}			
+			if(!this.produit.category){
+				this.produit.category = this.laboratoire;
 				this.logs = ""
 			}
-			axios.post(this.$store.state.url+`/produit/`, this.produit, this.headers)
+			axios.post(this.$store.state.url+`/produit/`, this.produit,this.headers)
 			.then((response) => {
-				this.produit = {};
-				this.$store.state.produits.push(response.data);
+				this.data = {};
+				this.$store.state.products.push(response.data);
+				this.$emit('close')
 			}).catch((error) => {
 				console.error(error);
 			})
@@ -223,6 +300,7 @@ input[type=text], input[type=password], input[type=number], select{
     border: 1px solid black;
 }
 input[type=submit], button{
+	float: right;
 	padding: 8px 15px;
 	font-size: 1em;
 	background: var(--primary);
@@ -325,8 +403,8 @@ td{
 }
 form{
 	margin-top: 10px;
-	display: flex;
-	flex-direction: column;
+	display: inline-grid;
+	grid-auto-columns: column;
 }
 form div{
 	margin: 5px;
@@ -338,9 +416,7 @@ form div{
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-.buttons *{
-  margin: 0 5;
+  float: right;
 }
 .logs{
   width: 180px;

@@ -5,17 +5,16 @@ import Stock from '../views/Stock.vue'
 import Cart from '../views/Cart.vue'
 import Checkout from '../views/Checkout.vue'
 import Success from '../views/Success.vue'
-import Order from '../views/Order.vue'
+import Orders from '../views/Orders.vue'
 import commande from '../views/commande.vue'
-// import Dettes from '../views/Dettes.vue'
+import BonCommande from '../views/BonCommande.vue'
 // import Achats from '../views/Achats.vue'
 // import Ventes from '../views/Ventes.vue'
 // import StatsProduct from '../views/StatsProduct.vue'
 // import StatsClients from '../views/StatsClients.vue'
 // import StatsPertes from '../views/StatsPertes.vue'
 // import Payments from '../views/Payments.vue'
-// import Pertes from '../views/Pertes.vue'
-// import Users from '../views/Users.vue'
+import Users from '../views/Users.vue'
 
 Vue.use(VueRouter)
 
@@ -25,8 +24,9 @@ const routes = [
   {path: '/domain/:id/category/', name: 'category', component: () => import('../views/Category.vue'), props: true},
   {path: '/category/:id/products/', name: 'product', component: () => import('../views/Product.vue'), props: true},
   {path: '/stock1', name: 'stock', component: Stock },
-  {path: '/orders',name: 'Order', component: Order},
+  {path: '/orders',name: 'Orders', component: Orders},
   {path: '/command',name: 'commande', component: commande},
+  {path: '/bon-commande',name: 'BonCommande', component: BonCommande},
   {
     path: '/cart/checkout',
     name: 'Checkout',
@@ -51,7 +51,7 @@ const routes = [
 //   { path: '/stats/clients', name: 'statsclients', component: StatsClients },
 //   { path: '/stats/pertes', name: 'statspertes', component: StatsPertes },
 //   { path: '/pertes', name: 'pertes', component: Pertes },
-//   { path: '/users', name: 'users', component: Users },
+  { path: '/users', name: 'users', component: Users },
 ]
 
 const router = new VueRouter({
