@@ -4,8 +4,8 @@
         <th>{{item.product.reference}}</th>
         <th>{{item.product.quantite }} {{item.product.unite }}</th>
          <td>  
-            <a class=" btn btn-success btn-sm" @click="decrementQuantity(item)">-</a> &nbsp;
-            <a class=" btn btn-success btn-sm" @click="incrementQuantity(item)">+</a> &nbsp;
+            <a class="btn btn-success btn-sm" @click="decrementQuantity(item)">-</a> &nbsp;
+            <a class="btn btn-success btn-sm" @click="incrementQuantity(item)">+</a> &nbsp;
             {{ item.quantity }}{{item.product.unite }}
         </td>
         <td><button  class=" btn btn-danger btn-sm delete" @click="removeFromCart(item)">x</button></td>
@@ -51,3 +51,10 @@ export default {
     }
 }
 </script>
+<style scoped>
+    .btn-success{
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+</style>
