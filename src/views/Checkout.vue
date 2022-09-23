@@ -80,7 +80,7 @@ export default {
             errors: []
         }
     },
-        mounted() {
+    mounted() {
         document.title = 'Commande | Labo'
 
         this.cart = this.$store.state.cart
@@ -139,7 +139,7 @@ export default {
                 .post(this.$store.state.url+'/commande/', data, this.headers)
                 .then(response => {
                     this.$store.commit('clearCart')
-                    // this.$router.push('/cart/success')
+                    this.$router.push('/cart/success')
                 })
                 .catch(error => {
                     this.errors.push('Something went wrong. Please try again')
