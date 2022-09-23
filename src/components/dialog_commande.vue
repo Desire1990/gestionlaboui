@@ -2,7 +2,7 @@
 	<div :class="{popup:true, active:visible}" @click="close">
 		<div class="popup-body" @click.prevent.stop>
 			<center>
-				<h3>Augmenter {{produit.nom}}</h3>
+				<h3>Augmenter {{produit.materiel}}</h3>
 			</center>
 			<form method="post">
 				<div class="inline_field">
@@ -24,7 +24,7 @@
 						<label for="prix">Prix unitaire</label>
 						<input type="number" v-model="prix"
 							id="prix" ref="prix">
-					</div>
+					</div><br>
 					<div class="field">
 						<label for="total">Prix total</label>
 						<input type="number" v-model="total"
@@ -59,7 +59,7 @@ export default {
 	},
 	computed:{
 		qttTotal(){
-			return this.lg_qtt*this.produit.rapport+(this.sm_qtt*1);
+			return this.lg_qtt*this.produit.quantite+(this.sm_qtt*1);
 		},
 		headers(){
 			return {
@@ -82,7 +82,7 @@ export default {
 		},
 		achat(value){
 			console.log(value);
-			if(this.produit.rapport == 1){
+			if(this.produit.quantite >=0){
 				this.lg_qtt = value.quantite;
 			} else {
 				this.sm_qtt = value.quantite;
@@ -167,7 +167,7 @@ form div{
 	margin: 5px;
 }
 .inline_field{
-	display: flex;
+	display: inline-grid;
 }
 @charset "UTF-8";
 :root {
