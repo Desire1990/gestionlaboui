@@ -7,7 +7,7 @@
         <table class="table commandes">
           <thead>
             <tr class="panier-item">
-              <th>id</th>
+              <th>#</th>
               <th>Commande</th>
               <th>Bon Livraison</th>
               <th>Produit</th>

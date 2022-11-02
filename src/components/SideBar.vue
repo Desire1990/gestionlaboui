@@ -140,7 +140,7 @@
             user:'admin'
           },
           {
-            link: '/stock1',
+            link: '/stock',
             name: 'Stock Centrale',
             tooltip: 'Messages',
             icon: 'bx-store',
@@ -149,7 +149,7 @@
 
           },
           {
-            link: '/stock2',
+            link: '/stock-labo',
             name: 'Stock',
             tooltip: 'Messages',
             icon: 'bx-store-alt',

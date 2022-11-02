@@ -21,7 +21,8 @@ export default {
   name: 'App',
   data: () => {
     return {
-      navOpen: true
+      navOpen: true,
+      cartCount: 0,
     }
   },
   components: {

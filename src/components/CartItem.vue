@@ -45,8 +45,8 @@ export default {
             localStorage.setItem('cart', JSON.stringify(this.$store.state.cart))
         },
         removeFromCart(item) {
-            this.$emit('removeFromCart', item) // call parent function
             this.updateCart()
+            this.$emit('removeFromCart', item) // call parent function
         },
     }
 }

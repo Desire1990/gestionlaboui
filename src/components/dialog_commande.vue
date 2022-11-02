@@ -7,28 +7,14 @@
 			<form method="post">
 				<div class="inline_field">
 					<div class="field">
-						<label for="lg_qtt">{{ produit.unite }}</label>
+						<label for="lg_qtt">{{ produit.reference }}:</label>
 						<input type="number" v-model="lg_qtt" id="lg_qtt">
 					</div>
-					<div class="field" v-if="produit.rapport!=1">
-						<label for="sm_qtt">{{ produit.unite_sortant }}</label>
-						<input type="number" v-model="sm_qtt" id="sm_qtt">
-					</div>
 				</div>
-				<div class="total">
-					La quantité total en unités:
-					<b>{{ qttTotal }}</b>
-				</div>
-				<div :class="{'inline_field':produit.rapport!=1}">
+				<div class="inline_field">
 					<div class="field">
-						<label for="prix">Prix unitaire</label>
-						<input type="number" v-model="prix"
-							id="prix" ref="prix">
-					</div><br>
-					<div class="field">
-						<label for="total">Prix total</label>
-						<input type="number" v-model="total"
-							id="total" ref="total">
+						<label for="lg_qtt">Quantite in Stock {{ produit.quantite }}{{ produit.unite }}:</label>
+						<input type="number" v-model="lg_qtt" id="lg_qtt">
 					</div>
 				</div>
 				<div class="field">
@@ -59,7 +45,7 @@ export default {
 	},
 	computed:{
 		qttTotal(){
-			return this.lg_qtt*this.produit.quantite+(this.sm_qtt*1);
+			return this.produit.quantite+(this.sm_qtt*1);
 		},
 		headers(){
 			return {
@@ -70,16 +56,6 @@ export default {
 		}
 	},
 	watch:{
-		prix(value){
-			if(this.$refs.prix == document.activeElement){
-				this.total = value*this.qttTotal;
-			}
-		},
-		total(value){
-			if(this.$refs.total == document.activeElement){
-				this.prix = value/this.qttTotal;
-			}
-		},
 		achat(value){
 			console.log(value);
 			if(this.produit.quantite >=0){
@@ -107,15 +83,14 @@ export default {
 			let data = {
 				"quantite": this.qttTotal,
 				"details": this.details,
-				"prix_total": this.total,
 				"produit": this.produit.id
 			};
 			let url = this.$store.state.url
 			axios.post(url+"/achat/", data, this.headers)
 			.then((response) => {
-				let produits = this.$store.state.produits
+				let produits = this.$store.state.products
 				let produit = produits.find(x => x.id == this.produit.id);
-				this.$store.state.achats.unshift(response.data)
+				this.$store.state.products.unshift(response.data)
 				if(!!produit){
 					produit.quantite += response.data.quantite;
 					this.$emit("close");

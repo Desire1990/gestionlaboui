@@ -13,15 +13,15 @@
                         <div>
                             <a class="fa-solid fa-cart-shopping"></a>
                         </div>
-                      <div>
-                        <i class="fa fa-shopping-cart" style="font-size:48px">({{cartTotalLength}})</i>
+                      <div v-if='cartTotalLength!=0'>
+                        <i class="fa fa-shopping-cart" style="font-size:36px">({{cartTotalLength}})</i>
 
                       </div>
                     </div>
                 </router-link>
                 <div class="user-wrapper"  @click="loggout">
                     <div>
-                        <a class="fa fa-sign-out desos"  style="font-size:48px; color:red"></a>
+                        <a class="fa fa-sign-out desos"  style="font-size:36px; color:red"></a>
                     </div>
               <!-- <div class=" desos bx bx-log-out" @click="loggout" style="font-size:36px;color:white"> -->
                 <!-- <fa icon="power-off" /> -->
@@ -42,7 +42,7 @@ export default {
         }
     }
   },
-    beforeCreate() {
+  beforeCreate() {
     // initialize
     this.$store.commit('initiallizeStore')
     
@@ -79,7 +79,7 @@ export default {
     cartTotalLength() {
       let totalLength = 0
       for (let i = 0; i < this.cart.items.length; i++) {
-        totalLength += this.cart.items[i].quantity
+        totalLength += parseFloat(this.cart.items[i].quantity)
       }
 
       return totalLength
