@@ -20,7 +20,7 @@
 
                     <tbody>
                         <CartItem
-                            v-for="(item, index) in cart.items"
+                            v-for="item in cart.items"
                             v-bind:key="item.id"
                             v-bind:initialItem="item"
                             v-on:removeFromCart="removeFromCart"/> <!-- listen the method -->
@@ -60,22 +60,21 @@ export default {
         this.cart = this.$store.state.cart
     },
     methods: {
+        updateCart() { // update vuex
+            localStorage.setItem('cart', JSON.stringify(this.$store.state.cart))
+        },
         removeFromCart(item) {
             this.cart.items = this.cart.items.filter( i => i.product.id !== item.product.id)
+            this.updateCart()
         }
     },
     computed: {
         
         cartTotalLength() {
             return this.cart.items.reduce( (acc, currentValue) => {
-                return acc += currentValue.quantity
+                return acc += parseFloat(currentValue.quantity)
             },0)
         },
-        cartTotalPrice() {
-            return this.cart.items.reduce((acc, currentValue) => {
-                return acc += currentValue.product.price * currentValue.quantity
-            }, 0)
-        }
 
     }
 

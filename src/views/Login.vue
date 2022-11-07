@@ -4,7 +4,7 @@
             <div class="inner-block">
                 <form class="login">
                     <center>
-                        <img src="../assets/img/download.jpeg" alt="" width="80px" height="80px">
+                        <img src="https://upload.wikimedia.org/wikipedia/en/e/e0/Emblem_of_the_University_of_Burundi.gif" alt="" width="80px" height="80px">
                         <h1 style="color:var(--primary); font-size: 36px;">Gestion Laboratoire</h1>
                     </center>
 
