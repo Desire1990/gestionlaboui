@@ -6,7 +6,7 @@
   export default{
     components:{domain},
     mounted() {
-        document.title = 'Dashboard | Gestion Labo'
+        document.title = 'All products | Gestion Labo'
     },
   }
 </script>
