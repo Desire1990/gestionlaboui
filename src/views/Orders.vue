@@ -10,7 +10,7 @@
           <thead>
             <tr class="panier-item">
               <th>#</th>
-              <th>Professeur</th>
+              <th>User</th>
               <th>Numero de Order</th>
               <th>Date ordered</th>
               <th>Status</th>
@@ -20,7 +20,7 @@
           <tbody id="paiements">
             <tr v-for="(item, index) in items" :key='item.id'>
               <td>{{ index+1 }}</td>
-              <td>{{ item.professeur.user.first_name }} {{ item.professeur.user.last_name }}</td>
+              <td>{{ item.user.user.first_name }} {{ item.user.user.last_name}}</td>
               <td>{{ item.num_order }}</td>
               <td>{{ datetime(item.created_at) }}</td>
               <td>{{item.status}}</td>
@@ -75,6 +75,7 @@ export default{
 			.then((response) => {
 				this.$store.state.commandes = response.data;
 				this.items=response.data.results
+				console.log(response.data)
 			}).catch((error) => {
 				if(error.response.data.code == "token_not_valid"){
 					let data = {
