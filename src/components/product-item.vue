@@ -8,7 +8,8 @@
         <h6 class="card-subtitle">{{product.reference}}</h6><hr>
         <h6 class="card-text">{{product.designation}}</h6>
         <p class="card-text"> Qte:{{product.quantite}} {{product.unite}}</p><hr>
-        <button class="btn btn-success btn-sm" @click="addToCart">Add To Cart </button>
+        <p class="text-center"><input v-model="quantity" type="float" class="form-control" placeholder="Qty" min="1"/></p>
+        <button class="btn btn-success btn-sm" @click="addToCart(product)">Add To Cart </button>
     </center>
   </div>
 </div>

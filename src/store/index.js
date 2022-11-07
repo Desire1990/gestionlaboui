@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
+
 export default new Vuex.Store({
 state: {
     user: null,
     // url:'/api',
-    url: 'http://localhost:8000/api',
-    // url: 'https://redgoldinvest.com/api',
+    // url: 'http://localhost:8000/api',
+    url: 'https://memoire.amidev.bi/api',
     users:[],
     domains:[],
     categories:[],
@@ -14,7 +15,12 @@ state: {
     products:[],
     orders:[],
     orderitems:[],
+    bonLivraisonItems:[],
+    bonLivraisons:[],
     cart: {
+      items: []
+    },
+    carts: {
       items: []
     }
   },
@@ -41,12 +47,22 @@ state: {
     addToCart(state, item) {
       const exists = state.cart.items.filter( i => i.product.id === item.product.id)
       if(exists.length) {
-        exists[0].quantity = parseInt(exists[0].quantity) + parseInt(item.quantity)
+        exists[0].quantity = parseFloat(exists[0].quantity) + parseFloat(item.quantity)
       } else {
         state.cart.items.push(item)
       }
 
       localStorage.setItem('cart', JSON.stringify(state.cart))
+    },    
+    AddToCart(state, item) {
+      const exists = state.carts.items.filter( i => i.product.id === item.product.id)
+      if(exists.length) {
+        exists[0].quantity = parseFloat(exists[0].quantity) + parseFloat(item.quantity)
+      } else {
+        state.carts.items.push(item)
+      }
+
+      localStorage.setItem('carts', JSON.stringify(state.carts))
     },
     setIsLoading(state, status) {
       state.isLoading = status
@@ -54,10 +70,11 @@ state: {
     clearCart(state) {
       state.cart = { items: []}
       localStorage.setItem('cart', JSON.stringify(state.cart))
-    }
+    },
+    clear(state) {
+      state.carts = { items: []}
+      localStorage.setItem('carts', JSON.stringify(state.carts))
+    },
   },
-  actions: {
-  },
-  modules: {
-  }
+
 })

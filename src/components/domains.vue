@@ -8,7 +8,8 @@
 	      <div class="image-wrapper" v-for="(image, i) in domains.results" :key="image.id + i">
 	        <div class="image-img">
 	        <!-- <div class="image-img" :style="{ background: 'url(' + image.url + ')' }"> -->
-	        <img :src=" 'http://127.0.0.1:8000' + image.get_thumbnail" class="card-img-top" alt="image.name" />
+	        <!-- <img :src=" 'https://memoire.amidev.bi' + image.get_thumbnail" class="card-img-top" alt="image.name" /> -->
+          <img :src=" 'http://127.0.0.1:8000' + image.get_thumbnail" class="card-img-top" alt="image.name" />
 	        </div>
           <!-- <img :src=" 'https://redgoldinvest.com' + paquage.get_thumbnail" class="card-img-top" alt="paquage.name" /> -->
 	        <div class="image-details">

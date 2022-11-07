@@ -1,9 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Stock from '../views/Stock.vue'
+import StockCentral from '../views/StockCentral.vue'
+// import StockLabo from '../views/StockLabo.vue'
+import StockLabo1 from '../views/StockLabo1.vue'
 import Cart from '../views/Cart.vue'
+import cart from '../views/cart/cart.vue'
 import Checkout from '../views/Checkout.vue'
+import checkOrder from '../views/checkOrder.vue'
 import Success from '../views/Success.vue'
 import Orders from '../views/Orders.vue'
 import commande from '../views/commande.vue'
@@ -23,7 +27,9 @@ const routes = [
   {path: '/home', name: 'home', component: Home },
   {path: '/domain/:id/category/', name: 'category', component: () => import('../views/Category.vue'), props: true},
   {path: '/category/:id/products/', name: 'product', component: () => import('../views/Product.vue'), props: true},
-  {path: '/stock1', name: 'stock', component: Stock },
+  {path: '/stock', name: 'stockcentral', component: StockCentral },
+  // {path: '/stock-labo', name: 'stock', component: StockLabo },
+  {path: '/stock-labo', name: 'stock', component: StockLabo1 },
   {path: '/orders',name: 'Orders', component: Orders},
   {path: '/command',name: 'commande', component: commande},
   {path: '/bon-commande',name: 'BonCommande', component: BonCommande},
@@ -33,10 +39,20 @@ const routes = [
     component: Checkout,
   },
   {
+    path: '/cart/checkorder',
+    name: 'checkorder',
+    component: checkOrder,
+  },
+  {
     path: '/cart/success',
     name: 'Success',
     component: Success,
 
+  },
+  {
+    path : '/cart-order',
+    name : 'CartOrder',
+    component : cart
   },
   {
     path: '/cart',

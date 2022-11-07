@@ -7,7 +7,7 @@
 			</center>
 			<form method="post">
 				<div class="field">
-          <label for="id_nom">Nom du Laboratoire</label><br>
+          <label for="id_nom">Nom du Laboratoire</label>
           <input type="text" list="noms" v-model="laboratoire.name"
             id="id_nom" @change="setId">
         </div>
@@ -132,7 +132,8 @@ export default {
             this.$store.state.categories = response.data;
           }).catch((error) => {
           });
-        }
+        };
+        this.fetchProducts()
 
     },
 	methods: {
@@ -158,11 +159,19 @@ export default {
 		uploadCSV(){
 			axios.post(this.$store.state.url+`/produit/`, this.csv_array, this.headers)
 			.then((response) => {
-				this.$store.state.produits = this.$store.state.produits.concat(response.data);
+				this.$store.state.products = this.$store.state.produits.concat(response.data);
 				this.csv_array = [];
 				this.close();
 			}).catch((error) => {
 				console.error(error);
+			})
+		},
+		fetchProducts(){
+			axios.get(this.$store.state.url+'/produit/', this.headers)
+			.then((response) =>{
+				this.$store.state.products = response.data
+			}).catch((error)=>{
+				console.error(error)
 			})
 		},
 		createProduct(){
@@ -207,6 +216,7 @@ export default {
 			.then((response) => {
 				this.data = {};
 				this.$store.state.products.push(response.data);
+				this.fetchProducts()
 				this.$emit('close')
 			}).catch((error) => {
 				console.error(error);
@@ -293,11 +303,12 @@ body,#body {
 	padding: 0;
 	height: 100%;
 }
-input[type=text], input[type=password], input[type=number], select{
+input[type=text], input[type=number], select{
 	padding: 7px;
 	font-size: 12pt;
-    border-radius: 0;
-    border: 1px solid black;
+  border-radius: 0;
+  display: block;
+	border: 1px solid black;
 }
 input[type=submit], button{
 	float: right;
@@ -319,6 +330,7 @@ input[type=submit], button{
 }
 .field{
 	margin: 10px 0;
+	display: block;
 }
 .field *{
 	display: block;
@@ -394,20 +406,24 @@ td{
 	border-radius: 0;
 	top:30%;
 	left:50%;
-	transform: translate(-50%, -30%);
+	transform: translate(-50%, -25%);
 	background-color: white;
 	opacity: 1;
 	padding: 5px;
 }
-@media screen and (max-width: 650px){
+@media screen and (max-width: 900px){
+}
+form label {
+  display: block;
 }
 form{
 	margin-top: 10px;
-	display: inline-grid;
+	display: block;
 	grid-auto-columns: column;
 }
 form div{
 	margin: 5px;
+	display: flex;
 }
 [disabled]{
 	border: 1px solid gray;
