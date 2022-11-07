@@ -5,7 +5,7 @@
 
       </div>
       <br>
-     <div v-if ="items.length==0">
+     <div v-if ="items==0">
      	<p class="vide" >Pas de bon de commande effectue ...</p>
      </div>
 		<div class="scrollable-tab" v-else>
@@ -22,9 +22,9 @@
             </tr>
           </thead>
           <tbody id="paiements"> 
-            <tr v-for="(item, index) in items" :key='item.id'>
+            <tr v-for="(item, index) in items">
               <td>{{ index+1 }}</td>
-              <td>{{ item.user.username }}</td>
+              <td>{{ item.user.user.username }}</td>
               <td>{{ item.laboratoire.name }}</td>
               <td>{{ item.num_bon }}</td>
               <td>{{ datetime(item.date_livraison) }}</td>
@@ -79,20 +79,9 @@ export default{
 			.then((response) => {
 				this.$store.state.commandes = response.data;
 				this.items=response.data.results
-			}).catch((error) => {
-				if(error.response.data.code == "token_not_valid"){
-					let data = {
-						refresh: this.$store.state.user.refresh
-					};
-					axios.post(this.$store.state.url+'/refresh/', data)
-					.then((response) => {
-						this.$store.state.user.access = response.data.access;
-						this.fetchCommandes();
-					}).catch((error) =>{
+			}).catch((error) =>{
 						this.$store.state.user = null;
-					})
-				}
-			});
+				})
 		},
 		exitEdition(){
 			this.active_item = {};
