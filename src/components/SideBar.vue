@@ -103,7 +103,7 @@
       },
       menuLogo: {
         type: String,
-        default: require('../assets/img/download.jpeg')
+        default: ('https://upload.wikimedia.org/wikipedia/en/e/e0/Emblem_of_the_University_of_Burundi.gif')
       },
       menuIcon: {
         type: String,
@@ -204,7 +204,7 @@
       //! Profile detailes
       profileImg: {
         type: String,
-        default: require('../assets/img/download.jpeg'),
+        default: ('https://upload.wikimedia.org/wikipedia/en/e/e0/Emblem_of_the_University_of_Burundi.gif'),
       },
       profileName: {
         type: String,
