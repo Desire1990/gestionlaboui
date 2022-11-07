@@ -64,7 +64,10 @@ export default {
       details_opened:false, active_user:{groups:[]},
     }
   },
-  computed:{
+  mounted() {
+    this.searchItem();
+    this.fetchData()
+    document.title = 'All users | Gestion Labo'
   },
   methods:{
     editable(user){
@@ -140,10 +143,6 @@ export default {
       this.active_user = user
     }
   },
-  mounted(){
-    this.searchItem();
-    this.fetchData()
-  }
 };
 </script>
 <style scoped>

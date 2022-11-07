@@ -25,7 +25,7 @@
           <tbody id="paiements">
             <tr v-for="(commande, index) in items">
               <td>{{ index+1 }}</td>
-              <td>{{ commande.user.username }}</td>
+              <td>{{ commande.user.user.username }}</td>
               <td>{{ commande.laboratoire.name }}</td>
               <td>{{ commande.num_commande }}</td>
               <td>{{ datetime(commande.date_commande) }}</td>
@@ -112,7 +112,6 @@ export default{
 						this.$store.state.user.access = response.data.access;
 						this.fetchCommandes();
 					}).catch((error) =>{
-						this.$store.state.user = null;
 					})
 				}
 			});
@@ -365,7 +364,7 @@ td{
 	color: #fff;
 }
 .table button, .table .btn{
-	padding: 3px 1em;
+	padding: 3px 8px;
 }
 .table tr:hover {
 	background-color: #ddd;
