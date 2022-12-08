@@ -14,7 +14,7 @@
             <tr class="panier-item">
               <th>#</th>
               <th>User</th>
-              <th>Laboratoire</th>
+              <th>Departement</th>
               <th>Numero de Commande</th>
               <th>Date commande</th>
               <th>Status</th>
@@ -25,20 +25,22 @@
           <tbody id="paiements">
             <tr v-for="(commande, index) in items">
               <td>{{ index+1 }}</td>
-              <td>{{ commande.user.user.username }}</td>
-              <td>{{ commande.laboratoire.name }}</td>
+              <td>{{ commande.utilisateur.user.username }}</td>
+              <td>{{ commande.utilisateur.departement.name }}</td>
               <td>{{ commande.num_commande }}</td>
               <td>{{ datetime(commande.date_commande) }}</td>
               <td>{{commande.status}}</td>
               <td>
-                  <i class="fa fa-edit" style="color:blue;font-size: 24px; padding-right: 10px;" aria-hidden="true" @click.prevent="showDetails(commande)"></i>
+                <div class="btns" >
+                  <!-- <i class="fa fa-edit" style="color:blue;font-size: 24px; padding-right: 10px;" aria-hidden="true" @click.prevent="showDetails(commande)"></i> -->
               		
 
-                  <i class="fa fa-trash" style="color:red;font-size: 24px;" aria-hidden="true" @click.prevent="Delete(commande)"></i>
+                 <button style="background-color: white;"> <i class="fa fa-trash" style="color:red;font-size: 24px;" aria-hidden="true" @click.prevent="Delete(commande)"></i></button>
                   	
-              </td>
-              <td>
-                <div class="btns" >
+            		<router-link to="/products">
+              		<button >Creer bon</button>            			
+            		</router-link>
+             
                   <button @click.prevent="showDetails(commande)">Detail</button>
                 </div>
               </td>
@@ -47,14 +49,16 @@
       </table>
 	</div>
   	<DetailsDialog :visible='details_opened' :commande='active_commande' @close="details_opened=false"/>
+  	  	<ProduitDialog :visible="add_mode" @close="exitEdition"/>
   </div>
 </template>
 <script>
 import axios from "axios"
 import DetailsDialog from "../components/detail_commande.vue";
+import ProduitDialog from "../components/dialog_produit.vue";
 
 export default{
-	components:{DetailsDialog},
+	components:{DetailsDialog, ProduitDialog},
 	data(){
 		return {
 			csvData : {},

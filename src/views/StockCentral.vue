@@ -49,7 +49,7 @@
               <td>
                 <div class="btns" >
                   <button @click.prevent="startEdit(item) ">Edit</button>
-                  <button @click.prevent="startCommande(item) ">Add</button>
+                  <button @click.prevent="Delete(item) ">Delete</button>
                 </div>
               </td>
             </tr>
@@ -88,6 +88,17 @@ export default{
         }
     },
   methods: {
+  	Delete(com) {
+        if (confirm('Delete ' + com.id)) {
+            axios.delete(this.$store.state.url+`/produit/${com.id}/`, this.header)
+                .then( response =>                     
+                {
+                    this.fetchProducts()
+                    return response
+                }
+            );
+        }
+    },
     dosearch(value){
         axios.get(this.$store.state.url+`/produit/?search=${this.search_term}`, this.header)
         .then((response) => {
@@ -161,9 +172,9 @@ export default{
 		generateCSV(){
 
 			let data = this.datas;
-			let headers = `id,Reference,Materiel,Designation,Quantite,Status\n`;
+			let headers = `id,Reference,Materiel,Designation,Quantite,date de peremption,Status\n`;
 			for (var i = 0;i< data.length ; i++) {
-				headers += data[i].id+','+data[i].reference+','+data[i].materiel+','+data[i].designation+','+data[i].quantite + data[i].unite+','+data[i].status+'\n'
+				headers += data[i].id+','+data[i].reference+','+data[i].materiel+','+data[i].designation+','+data[i].quantite + data[i].unite+','+data[i].date_peremption+','+data[i].status+'\n'
 			}
 			this.download(headers);
 

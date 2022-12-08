@@ -20,7 +20,7 @@
           <tbody id="paiements">
             <tr v-for="(item, index) in items" :key='item.id'>
               <td>{{ index+1 }}</td>
-              <td>{{ item.user.user.first_name }} {{ item.user.user.last_name}}</td>
+              <td>{{ item.utilisateur.user.first_name }} {{ item.utilisateur.user.last_name}}</td>
               <td>{{ item.num_order }}</td>
               <td>{{ datetime(item.created_at) }}</td>
               <td>{{item.status}}</td>
