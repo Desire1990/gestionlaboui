@@ -1,6 +1,7 @@
 <template>
   <div class="parent">
-  	 <div class="form-inline my-2 my-lg-0 top" style="padding-top:20px;">
+	 <h3 style="text-align: center;text-transform: uppercase;">Bon commandes</h3>
+  	 <div class="form-inline my-2 my-lg-0 top" style="float: left;padding:20px;">
         <input class="form-control mr-sm-2" type="text" placeholder="Search" v-model="search_term" aria-label="Search">
 
       </div>
@@ -14,9 +15,10 @@
             <tr class="panier-item">
               <th>#</th>
               <th>User</th>
-              <th>Laboratoire</th>
+              <th>Departement</th>
+              <th>Commande</th>
               <th>Numero de bon</th>
-              <th>Date commande</th>
+              <th>Date de bon</th>
               <th>Status</th>
               <th></th>
             </tr>
@@ -24,8 +26,9 @@
           <tbody id="paiements"> 
             <tr v-for="(item, index) in items">
               <td>{{ index+1 }}</td>
-              <td>{{ item.user.user.username }}</td>
-              <td>{{ item.laboratoire.name }}</td>
+              <td>{{ item.utilisateur.user.username }}</td>
+              <td>{{ item.utilisateur.departement.name }}</td>
+              <td>{{ item.commande.num_commande}}</td>
               <td>{{ item.num_bon }}</td>
               <td>{{ datetime(item.date_livraison) }}</td>
               <td>{{item.status}}</td>
@@ -375,5 +378,11 @@ td{
 	padding: 40px;
 	margin: 40px;
 	text-align: center;
+}
+h3{
+	text-align: center;
+	font-size: 36px;
+	color: teal;
+
 }
 </style>

@@ -36,14 +36,14 @@
                       <input type="text" v-model="num_commande"
                         >
                     </div>
-                    <div class="field">
+<!--                     <div class="field">
                       <label for="id_nom">Nom du Laboratoire</label><br>
                       <input type="text" list="noms" v-model="laboratoire.name"
                         id="id_nom" @change="setId">
-                    </div>
+                    </div> --><!-- 
                       <datalist id="noms">
                         <option v-for="labo in laboratoires.results" :value="labo.name"/>
-                      </datalist>
+                      </datalist> -->
                     </div>
                 </div>
 
@@ -129,7 +129,7 @@ export default {
             }
             // commande object
             data = {
-                'laboratoire': this.laboratoire,
+                // 'laboratoire': this.laboratoire,
                 'num_commande': this.num_commande,
                 'items': allItems,
             }
