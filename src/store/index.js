@@ -6,8 +6,8 @@ export default new Vuex.Store({
 state: {
     user: null,
     // url:'/api',
-    // url: 'http://localhost:8000/api',
-    url: 'https://memoire.amidev.bi/api',
+    url: 'http://localhost:8000/api',
+    // url: 'https://memoire.amidev.bi/api',
     users:[],
     domains:[],
     categories:[],
@@ -21,6 +21,9 @@ state: {
       items: []
     },
     carts: {
+      items: []
+    },
+    cartbon: {
       items: []
     }
   },
@@ -63,6 +66,16 @@ state: {
       }
 
       localStorage.setItem('carts', JSON.stringify(state.carts))
+    },    
+    AddToCartbon(state, item) {
+      const exists = state.cartbon.items.filter( i => i.product.id === item.product.id)
+      if(exists.length) {
+        exists[0].quantity = parseFloat(exists[0].quantity) + parseFloat(item.quantity)
+      } else {
+        state.cartbon.items.push(item)
+      }
+
+      localStorage.setItem('cartbon', JSON.stringify(state.cartbon))
     },
     setIsLoading(state, status) {
       state.isLoading = status
@@ -74,6 +87,10 @@ state: {
     clear(state) {
       state.carts = { items: []}
       localStorage.setItem('carts', JSON.stringify(state.carts))
+    },
+    clearbon(state) {
+      state.cartbon = { items: []}
+      localStorage.setItem('cartbon', JSON.stringify(state.cartbon))
     },
   },
 

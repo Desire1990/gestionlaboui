@@ -60,6 +60,12 @@ export default {
     
 </script>
 <style type="text/css" scoped>
+  @import url("https://fonts.googleapis.com/css?family=Fjalla+One|Montserrat:300,400,700,800|Open+Sans:300");
+.stock__item {
+  background-image: linear-gradient(to right bottom, #b98eda, #a09ae0, #8234e5, #5d3be8, #1241eb);
+  margin: 10px;
+  color: #fff;
+}
   h1{
     text-align: center;
   }

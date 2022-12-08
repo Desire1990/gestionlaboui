@@ -7,7 +7,7 @@
 			</center>
 			<form method="post">
 				<div class="field">
-          <label for="id_nom">Nom du Laboratoire</label>
+          <label for="id_nom">Categorie</label>
           <input type="text" list="noms" v-model="laboratoire.name"
             id="id_nom" @change="setId">
         </div>

@@ -12,7 +12,9 @@ import Success from '../views/Success.vue'
 import Orders from '../views/Orders.vue'
 import commande from '../views/commande.vue'
 import BonCommande from '../views/BonCommande.vue'
-// import Achats from '../views/Achats.vue'
+import Allproducts from '../views/Allproducts.vue'
+import Boncart from '../views/Boncart.vue'
+import checkbon from '../views/checkbon.vue'
 // import Ventes from '../views/Ventes.vue'
 // import StatsProduct from '../views/StatsProduct.vue'
 // import StatsClients from '../views/StatsClients.vue'
@@ -33,6 +35,7 @@ const routes = [
   {path: '/orders',name: 'Orders', component: Orders},
   {path: '/command',name: 'commande', component: commande},
   {path: '/bon-commande',name: 'BonCommande', component: BonCommande},
+  {path: '/products',name: 'Allproducts', component: Allproducts},
   {
     path: '/cart/checkout',
     name: 'Checkout',
@@ -42,6 +45,11 @@ const routes = [
     path: '/cart/checkorder',
     name: 'checkorder',
     component: checkOrder,
+  },,
+  {
+    path: '/cart/bon',
+    name: 'checkbon',
+    component: checkbon,
   },
   {
     path: '/cart/success',
@@ -58,15 +66,12 @@ const routes = [
     path: '/cart',
     name: 'Cart',
     component: Cart
+  },,
+  {
+    path: '/bon',
+    name: 'Boncart',
+    component: Boncart
   },
-//   { path: '/hist/dettes', name: 'dettes', component: Dettes },
-//   { path: '/hist/achats', name: 'achats', component: Achats },
-//   { path: '/hist/ventes', name: 'ventes', component: Ventes },
-//   { path: '/hist/paiements', name: 'paiements', component: Payments },
-//   { path: '/stats/product', name: 'statsproduct', component: StatsProduct },
-//   { path: '/stats/clients', name: 'statsclients', component: StatsClients },
-//   { path: '/stats/pertes', name: 'statspertes', component: StatsPertes },
-//   { path: '/pertes', name: 'pertes', component: Pertes },
   { path: '/users', name: 'users', component: Users },
 ]
 

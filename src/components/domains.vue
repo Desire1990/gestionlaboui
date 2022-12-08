@@ -1,32 +1,21 @@
 <template>
 	<div id="vue">
-	  <h1>Sélectionnez un domaine ci-contre</h1>
-	  <!-- <input class="search" placeholder="Search a title, description, or category" v-model="liveSearchString" /> -->
+	  <h1>Sélectionnez un domaine</h1>
+	  <input class="search" placeholder="Search a domain, or category name" v-model="search_term" />
 	  <div class="loading" v-show="loading"></div>
 	  <div class="images-wrapper" v-show="!loading">
 	    <transition-group name="image-wrapper" tag="div" class="images-inner">
-	      <div class="image-wrapper" v-for="(image, i) in domains.results" :key="image.id + i">
+	      <div class="image-wrapper" v-for="(image, i) in items.results" :key="image.id + i">
 	        <div class="image-img">
-	        <!-- <div class="image-img" :style="{ background: 'url(' + image.url + ')' }"> -->
 	        <!-- <img :src=" 'https://memoire.amidev.bi' + image.get_thumbnail" class="card-img-top" alt="image.name" /> -->
           <img :src=" 'http://127.0.0.1:8000' + image.get_thumbnail" class="card-img-top" alt="image.name" />
 	        </div>
-          <!-- <img :src=" 'https://redgoldinvest.com' + paquage.get_thumbnail" class="card-img-top" alt="paquage.name" /> -->
 	        <div class="image-details">
 	          <h3 class="image-title"><router-link :to="{ name: 'category', params: {id: image.id} }">{{ image.name }}</router-link></h3> 
-	          <!-- <p class="image-description"><span></span>{{ image.id}}<span></span></p> -->
-	          <!-- <p class="image-category">{{ image.name }}</p> -->
 	        </div>
 	      </div>
 	    </transition-group>
 	  </div>
-<!-- 	  <div class="load-wrapper" v-show="!loading && liveSearchString == ''">
-	    <div class="button-wrapper" v-if="!allLoaded">
-	      <button @click="showMore()">Load More</button>
-	    </div>
-	    <p v-else>ALL LOADED</p>
-	  </div> -->
-	  <!-- <div id="imageLoaderDock" style="display: none"></div> -->
 	</div>
 </template>
 <script>
@@ -37,14 +26,33 @@ export default{
       loading: false,
       imagesLimit: 15,
       allLoaded: false,
-      liveSearchString: '',
-      domains:this.$store.state.domains,
+      search_term: '',
+      items:this.$store.state.domains,
     }
   },
+    watch:{
+    "$store.state.domains"(new_val){
+      this.items = new_val;
+      },
+      search_term(value){
+            this.dosearch(value)
+        }
+    },
+    methods:{
+      dosearch(value){
+          axios.get(this.$store.state.url+`/domain/?search=${this.search_term}`, this.header)
+          .then((response) => {
+            this.$store.state.domains=response.data
+            this.items=response.data
+          }).catch((error) => {
+            console.error(error);
+          });
+      },
+    }, 
     mounted() {
     axios.get(this.$store.state.url + "/domain/",this.header)
         .then(res => {
-          this.domains = res.data
+          this.items = res.data
           console.log(res.data)
         })
         .catch(err => {
