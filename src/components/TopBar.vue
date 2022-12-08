@@ -18,6 +18,17 @@
 
                       </div>
                     </div>
+                </router-link>       
+                <router-link to="/bon" class="button is-primary">
+                    <div class="user-wrapper">
+                        <div>
+                            <a class="fa-solid fa-cart-shopping"></a>
+                        </div>
+                      <div v-if='cartTotalLengthbon!=0'>
+                        <i class="fa fa-shopping-cart" style="font-size:36px">({{cartTotalLengthbon}})</i>
+
+                      </div>
+                    </div>
                 </router-link>
                 <div class="user-wrapper"  @click="loggout">
                     <div>
@@ -39,6 +50,9 @@ export default {
     return{
         cart:{
             items:[]
+        },
+        cartbon:{
+            items:[]
         }
     }
   },
@@ -57,6 +71,7 @@ export default {
   },
   mounted(){
     this.cart = this.$store.state.cart
+    this.cartbon = this.$store.state.cartbon
     var user = JSON.parse(localStorage.getItem('user'));
     if (user) {
       this.$store.state.user = user;
@@ -80,6 +95,15 @@ export default {
       let totalLength = 0
       for (let i = 0; i < this.cart.items.length; i++) {
         totalLength += parseFloat(this.cart.items[i].quantity)
+      }
+
+      return totalLength
+    },
+
+    cartTotalLengthbon() {
+      let totalLength = 0
+      for (let i = 0; i < this.cartbon.items.length; i++) {
+        totalLength += parseFloat(this.cartbon.items[i].quantity)
       }
 
       return totalLength

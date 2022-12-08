@@ -21,9 +21,9 @@
                 <td style="color:#aaa;">{{index+1}}</td>
                 <td>{{item.bonLivraison.commande.num_commande}}</td>
                 <td>{{item.bonLivraison.num_bon}}</td>
-                <td>{{item.produit.materiel}}</td>
-                <td>{{item.qte_livree}} {{item.produit.unite}}</td>
-                <td>{{item.qte_restante}} {{item.produit.unite}}</td>
+                <td>{{item.product.materiel}}</td>
+                <td>{{item.qte_livree}} {{item.product.unite}}</td>
+                <td>{{item.qte_restante}} {{item.product.unite}}</td>
               </tr>
           </tbody>
         </table>
