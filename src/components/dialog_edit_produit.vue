@@ -37,7 +37,7 @@
 				</div>
 				<div class="buttons">
 					<div class="logs">{{logs}}</div>
-					<input type="submit" value="Modifier" @click="changerPrix">
+					<input type="submit" value="Modifier" @click="Update">
 				</div>
     		</form>
 		</div>
@@ -64,7 +64,7 @@ export default {
 		close(){
 			this.$emit("close");
 		},
-		changerPrix(){
+		Update(){
 			let headers = {
 				headers: {
 				"Authorization": "Bearer " + this.$store.state.user.access
