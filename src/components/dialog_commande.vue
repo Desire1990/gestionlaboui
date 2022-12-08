@@ -7,22 +7,11 @@
 			<form method="post">
 				<div class="inline_field">
 					<div class="field">
-						<label for="lg_qtt">{{ produit.reference }}:</label>
-						<input type="number" v-model="lg_qtt" id="lg_qtt">
-					</div>
-				</div>
-				<div class="inline_field">
-					<div class="field">
 						<label for="lg_qtt">Quantite in Stock {{ produit.quantite }}{{ produit.unite }}:</label>
-						<input type="number" v-model="lg_qtt" id="lg_qtt">
+						<input type="number" v-model="new_produit.quantite" id="lg_qtt">
 					</div>
-				</div>
-				<div class="field">
-					<label for="id_prix">Details:</label>
-					<textarea name="prix" v-model="details"></textarea> 
 				</div>
 				<div class="buttons">
-					<div class="logs">{{logs}}</div>
 					<input type="submit" @click="submit" value="submit">
 				</div>
 			</form>
@@ -39,13 +28,21 @@ export default {
 	},
 	data(){
 		return {
-			payee: 0, lg_qtt: 0, total:0, logs:"",
-			sm_qtt: 0, prix: 0, details:""
+			lg_qtt: 0,
+			new_produit:"",
 		}
+	},
+	watch:{
+		produit(new_value){
+			this.new_produit = JSON.parse(JSON.stringify(new_value));
+		}
+	},
+	mounted(){
+		this.fetchProducts
 	},
 	computed:{
 		qttTotal(){
-			return this.produit.quantite+(this.sm_qtt*1);
+			return this.produit.quantite;
 		},
 		headers(){
 			return {
@@ -55,17 +52,6 @@ export default {
 			}
 		}
 	},
-	watch:{
-		achat(value){
-			console.log(value);
-			if(this.produit.quantite >=0){
-				this.lg_qtt = value.quantite;
-			} else {
-				this.sm_qtt = value.quantite;
-			}
-			this.total = value.prix_total;
-		}
-	},
 	methods: {
 		close(){
 			this.lg_qtt = 0;
@@ -73,62 +59,47 @@ export default {
 			this.$emit("close")
 		},
 		submit(){
-			if(!this.achat){
-				this.performAchat()
-			} else {
-				this.performEdition()
-			}
+			this.augmenter()
 		},
-		performAchat(){
-			let data = {
-				"quantite": this.qttTotal,
-				"details": this.details,
-				"produit": this.produit.id
-			};
-			let url = this.$store.state.url
-			axios.post(url+"/achat/", data, this.headers)
+		fetchProducts(){
+			axios.get(this.$store.state.url+'/produit/', this.header)
 			.then((response) => {
-				let produits = this.$store.state.products
-				let produit = produits.find(x => x.id == this.produit.id);
-				this.$store.state.products.unshift(response.data)
-				if(!!produit){
-					produit.quantite += response.data.quantite;
+				this.$store.state.products = response.data;
+				this.items = response.data;
+				this.datas=response.data.results
+				console.log(response.data)
+			}).catch((error) => {
+				if(error.response.data.code == "token_not_valid"){
+					let data = {
+						refresh: this.$store.state.user.refresh
+					};
+					axios.post(this.$store.state.url+'/refresh/', data)
+					.then((response) => {
+						this.$store.state.user.access = response.data.access;
+						this.fetchProducts();
+					}).catch((error) =>{
+						this.$store.state.user = null;
+					})
+				}
+			});
+		},
+		augmenter(){
+			let headers = {
+				headers: {
+				"Authorization": "Bearer " + this.$store.state.user.access
+				}
+			};
+			axios.patch(this.$store.state.url+`/produit/${this.produit.id}/`, this.new_produit, headers)
+			.then((response) => {
+					console.log(response.data.quantite)
+
 					this.$emit("close");
-				} else {
-					this.logs = "quelque chose a mal tourné";
-				}
+					this.fetchProducts()
 			}).catch((error) => {
-				if (!!error.response) {
-					this.logs = error.response.data.status
-				} else {
-					this.logs = "une erreur est survenue";
-				}
-    		})
-		},
-		performEdition(){
-			let data = {
-				"quantite": this.qttTotal,
-				"details": this.details,
-				"prix_total": this.total,
-				"produit": this.produit.id
-			};
-			let url = this.$store.state.url
-			axios.put(url+`/achat/${this.achat.id}/`, data, this.headers)
-			.then((response) => {
-				this.produit.quantite-=this.achat.quantite;
-				this.achat.quantite = response.data.quantite;
-				this.produit.quantite += response.data.quantite;
-				this.achat.prix_total = response.data.prix_total;
-				this.achat.prix_unitaire = response.data.prix_unitaire;
-				this.$emit("close");
-			}).catch((error) => {
-				if (!!error.response) {
-					this.logs = error.response.data.status
-				} else {
-					this.logs = "une erreur est survenue";
-				}
-    		})
+				console.error(error);
+			})
 		}
+
 	}
 };
 </script>
