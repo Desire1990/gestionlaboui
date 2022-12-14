@@ -49,7 +49,8 @@
               <td>
                 <div class="btns" >
                   <button @click.prevent="startEdit(item) ">Edit</button>
-                  <button @click.prevent="Delete(item) ">Delete</button>
+                  <button @click.prevent="startCommande(item) ">Augmenter</button>
+                  <button class="btn btn-danger" @click.prevent="Delete(item) ">Delete</button>
                 </div>
               </td>
             </tr>
