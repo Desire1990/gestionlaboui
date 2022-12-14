@@ -91,8 +91,7 @@ export default {
 			};
 			axios.patch(this.$store.state.url+`/produit/${this.produit.id}/`, this.new_produit, headers)
 			.then((response) => {
-					console.log(response.data.quantite)
-
+					// console.log(response.data.quantite)
 					this.$emit("close");
 					this.fetchProducts()
 			}).catch((error) => {
