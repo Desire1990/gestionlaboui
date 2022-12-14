@@ -36,14 +36,6 @@
                       <input type="text" v-model="num_bon"
                         >
                     </div>
-                                        <div class="field">
-                      <label for="id_nom">Nom du Laboratoire</label><br>
-                      <input type="text" list="noms" v-model="commande.num_commande"
-                        id="id_nom" @change="setId">
-                    </div>
-                      <datalist id="noms">
-                        <option v-for="labo in commandes.results" :value="labo.num_commande"/>
-                      </datalist>
                    </div>
                 </div>
 
@@ -76,20 +68,12 @@ export default {
             cartbon: {
                 items: []
             },
-            errors: [],
-            id:this.$route.params.id
+            errors: []
         }
     },
     mounted() {
         document.title = 'Bon Commande | Labo'
         this.cartbon = this.$store.state.cartbon;
-        if(this.commandes.length<1){
-          axios.get(this.$store.state.url+'/commande/', this.headers)
-          .then((response) => {
-            this.$store.state.commandes = response.data;
-          }).catch((error) => {
-          });
-        }
     },
     methods: {
         setId(){
@@ -122,8 +106,9 @@ export default {
             }
             // commande object
             data = {
-                commande:this.commande,
+                commande:this.$store.state.selected_commande.id,
                 'num_bon': this.num_bon,
+                'utilisateur': this.$store.state.selected_commande.utilisateur.id,
                 'items': allItems,
             }
             console.log(data)
