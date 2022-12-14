@@ -58,7 +58,7 @@
 				</div>
 				<div class="logs">{{logs}}</div>
 				<div class="buttons">
-	<!-- 				<button @click.prevent="generateCSV">
+					<button @click.prevent="generateCSV">
 						<fa icon="download"/> Model
 					</button>
 					<button @click.prevent="onPickFile">
@@ -67,7 +67,7 @@
 					<input type="file" style="display: none"
 						ref="fileInput" accept=".csv"
 						@change="loadCSV">
- -->
+
 					<button @click.prevent="createProduct" ref="submit">
 						Créer
 					</button>
@@ -175,10 +175,10 @@ export default {
 			})
 		},
 		createProduct(){
-			// if(this.csv_array.length>0){
-			// 	this.uploadCSV();
-			// 	return;
-			// }
+			if(this.csv_array.length>0){
+				this.uploadCSV();
+				return;
+			}
 			let data={}	
 			if(!this.produit.materiel){
 				this.logs = "le materiel est obligatoire"
@@ -214,10 +214,10 @@ export default {
 			}
 			axios.post(this.$store.state.url+`/produit/`, this.produit,this.headers)
 			.then((response) => {
-				this.data = {};
-				this.$store.state.products.push(response.data);
-				this.fetchProducts()
+				// this.data = {};
+				// this.$store.state.products.push(response.data);
 				this.$emit('close')
+				this.fetchProducts()
 			}).catch((error) => {
 				console.error(error);
 			})
@@ -234,7 +234,7 @@ export default {
 			document.body.removeChild(a);
         },
       	generateCSV(){
-			let data = `"sep=;"\nnom;unite;unite_sortant;rapport;prix_vente\n`
+			let data = `id,reference,materiel,designation,quantite,date de peremption,status\n`
 			this.download(data)
 		},
 
