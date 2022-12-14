@@ -35,13 +35,11 @@
                   <!-- <i class="fa fa-edit" style="color:blue;font-size: 24px; padding-right: 10px;" aria-hidden="true" @click.prevent="showDetails(commande)"></i> -->
               		
 
-                 <button style="background-color: white;"> <i class="fa fa-trash" style="color:red;font-size: 24px;" aria-hidden="true" @click.prevent="Delete(commande)"></i></button>
-                  	
-            		<router-link to="/products">
-              		<button >Creer bon</button>            			
-            		</router-link>
-             
                   <button @click.prevent="showDetails(commande)">Detail</button>
+                 <button style="background-color: white;"> <i class="fa fa-trash" style="color:red;font-size: 24px;" aria-hidden="true" @click.prevent="Delete(commande)"></i></button>
+                  
+                  <button v-if="utilisateur.is_admin" @click="gotoProduct(commande)">Creer bon</button>
+             
                 </div>
               </td>
             </tr>
@@ -78,9 +76,14 @@ export default{
             this.dosearch(value)
         }
     },
+  computed:{
+  	utilisateur(){
+  		return this.$store.state.user
+  	}
+  },
   methods: {
   	envoyer(){
-
+  		axios.post(this.$store.state.url + '/commande/envoyer' )
   	},
     Delete(com) {
         if (confirm('Delete ' + com.id)) {
@@ -129,6 +132,10 @@ export default{
 		showDetails(commande){
       this.active_commande = commande;
       this.details_opened=true;
+    },
+		gotoProduct(commande){
+			this.$store.state.selected_commande = commande
+			this.$router.push("/products")
     },
 		startEdit(item){
 			this.active_item = item;
