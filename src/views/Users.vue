@@ -1,9 +1,13 @@
 <template>
   <div class="parent" @click="popover_opened=false">
+    <h2 style="text-align:center; text-transform: uppercase; margin: 10px; color: teal;">Tous les utitlisateurs</h2>
     <div class="top">
       <SearchBar :show_date="false" @searched="searchItem"/>
     </div>
-    <div class="recycler">
+    <div>
+      <button style="float:right; margin-right:250px;" @click="editUser(user)">
+        Creer
+      </button>
     </div>
     <div class="scrollable-tab">
       <table class="table users">
