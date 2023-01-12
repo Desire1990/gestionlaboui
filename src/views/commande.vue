@@ -83,7 +83,10 @@ export default{
   },
   methods: {
   	envoyer(){
-  		axios.post(this.$store.state.url + '/commande/envoyer' )
+  		axios.post(this.$store.state.url + '/commande/envoyer/', this.header)
+  		.then(response =>{
+  			console.log(response.data)
+  		})
   	},
     Delete(com) {
         if (confirm('Delete ' + com.id)) {
