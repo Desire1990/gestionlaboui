@@ -11,6 +11,7 @@
               <th>Commande</th>
               <th>Produit</th>
               <th>Quantites</th> 
+              <!-- <th>Date</th>  -->
 
             </tr>
           </thead>
@@ -18,8 +19,9 @@
               <tr v-for="(item, index) in commandes.results">
                 <td style="color:#aaa;">{{index+1}}</td>
                 <td>{{item.commande.num_commande}}</td>
-                <td>{{item.product.materiel}}</td>
+                <td>{{item.product.reference}}</td>
                 <td>{{item.qte_commande}} {{item.product.unite}}</td>
+                <!-- <td>{{datetime(item.commande.date_commande)}}</td> -->
               </tr>
           </tbody>
         </table>
