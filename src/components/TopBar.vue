@@ -14,7 +14,7 @@
                             <a class="fa-solid fa-cart-shopping"></a>
                         </div>
                       <div v-if='cartTotalLength!=0'>
-                        <i class="fa fa-shopping-cart" style="font-size:36px">({{cartTotalLength}})</i>
+                        <i class="fa fa-shopping-cart" aria-hidden="true" style="font-size:36px">({{cartTotalLength}})</i>
 
                       </div>
                     </div>
@@ -32,7 +32,7 @@
                 </router-link>
                 <div class="user-wrapper"  @click="loggout">
                     <div>
-                        <a class="fa fa-sign-out desos"  style="font-size:36px; color:red"></a>
+                        <a class="bx bx-log-out-circle desos"  style="font-size:36px; color:red"></a>
                     </div>
               <!-- <div class=" desos bx bx-log-out" @click="loggout" style="font-size:36px;color:white"> -->
                 <!-- <fa icon="power-off" /> -->
