@@ -5,13 +5,17 @@
 	  <div class="loading" v-show="loading"></div>
 	  <div class="images-wrapper" v-show="!loading">
 	    <transition-group name="image-wrapper" tag="div" class="images-inner">
-	      <div class="image-wrapper" v-for="(image, i) in items.results" :key="image.id + i">
+	      <div class="image-wrapper" v-for="(image, i) in items.results" :key="image.id + i" @click="goTo(image)">
 	        <div class="image-img">
-	        <!-- <img :src=" 'https://memoire.amidev.bi' + image.get_thumbnail" class="card-img-top" alt="image.name" /> -->
-          <img :src=" 'http://127.0.0.1:8000' + image.get_thumbnail" class="card-img-top" alt="image.name" />
+	        <img :src=" 'https://memoire.amidev.bi' + image.get_thumbnail" class="card-img-top" alt="image.name" />
+          <!-- <img :src=" 'http://127.0.0.1:8000' + image.get_thumbnail" class="card-img-top" alt="image.name" /> -->
 	        </div>
 	        <div class="image-details">
-	          <h3 class="image-title"><router-link :to="{ name: 'category', params: {id: image.id} }">{{ image.name }}</router-link></h3> 
+	          <h3 class="image-title" @click="goTo(image)">
+              <!-- <router-link :to="{ name: 'category', params: {id: image.id} }"> -->
+                {{ image.name }}
+              <!-- </router-link> -->
+            </h3> 
 	        </div>
 	      </div>
 	    </transition-group>
@@ -48,7 +52,10 @@ export default{
             console.error(error);
           });
       },
-    }, 
+      goTo(image){
+          this.$router.push(`/domain/${image.id}/category`)
+        }, 
+    },
     mounted() {
     axios.get(this.$store.state.url + "/domain/",this.header)
         .then(res => {
