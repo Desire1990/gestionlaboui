@@ -7,7 +7,7 @@
       </div>
       <br>
      <div v-if ="items==0">
-     	<p class="vide" >Pas de bon de commande effectue ...</p>
+     	<h3 class="vide" >Pas de bon de commande effectue ...</h3>
      </div>
 		<div class="scrollable-tab" v-else>
         <table class="table paiements">
@@ -19,7 +19,7 @@
               <th>Commande</th>
               <th>Numero de bon</th>
               <th>Date de bon</th>
-              <th>Status</th>
+              <!-- <th>Status</th> -->
               <th></th>
             </tr>
           </thead>
@@ -31,7 +31,7 @@
               <td>{{ item.commande.num_commande}}</td>
               <td>{{ item.num_bon }}</td>
               <td>{{ datetime(item.date_livraison) }}</td>
-              <td>{{item.status}}</td>
+              <!-- <td>{{item.status}}</td> -->
               <td>
                 <div class="btns" >
                   <button @click.prevent="showDetails(item)">Detail</button>

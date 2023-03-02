@@ -89,32 +89,9 @@ export default {
         if(this.cartTotalLength > 0) {
  
         }
-        if(this.laboratoires.length<1){
-          axios.get(this.$store.state.url+'/labo/', this.headers)
-          .then((response) => {
-            this.$store.state.laboratoires = response.data;
-          }).catch((error) => {
-          });
-        }
 
     },
     methods: {
-        setId(){
-          for(let laboratoire of this.$store.state.laboratoires){
-            if (laboratoire.id == this.laboratoire.id) {
-              this.laboratoire.name = laboratoire.name;
-              return;
-            }
-          }
-        },
-        setName(){
-          for(let laboratoire of this.$store.state.laboratoires){
-            if (laboratoire.name == this.laboratoire.name) {
-              this.laboratoire.id = laboratoire.id;
-              return;
-            }
-          }
-        },
         submitForm() {
             const allItems = []
             let data={}
@@ -130,6 +107,7 @@ export default {
             // commande object
             data = {
                 // 'laboratoire': this.laboratoire,
+                'departement': this.$store.state.user.departement.id,
                 'num_commande': this.num_commande,
                 'items': allItems,
             }
