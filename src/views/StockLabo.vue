@@ -3,8 +3,8 @@
 	  <div>
 	    <!-- <i class="fa fa-shopping-cart" style="font-size:36px; float:right; padding-right: 20px; color: var(--success);">({{cartTotalLengt}})</i> -->
       <div id="cart">
-        <router-link class="text-light" :to="{ name: 'CartOrder' }"
-          ><i class="fa fa-shopping-cart" style="font-size:36px; float:right; padding-right: 20px; color: var(--success);"> ({{ length }})</i
+        <router-link class="text-light" :to='/CartOrder'>
+          ><i class="fa fa-shopping-cart" style="font-size:36px; float:right; padding-right: 20px; color: var(--success);">  what({{ length }})</i
         ></router-link>
       </div>
 	  </div>

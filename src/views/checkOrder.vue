@@ -18,8 +18,8 @@
                     
                     <tbody>
                         <tr v-for="item in carts.items" v-bind:key="item.product.id">
-                            <td>{{ item.product.produit.materiel }}</td>
-                            <td>{{ item.product.produit.reference }}</td>
+                            <td>{{ item.product.product.materiel }}</td>
+                            <td>{{ item.product.product.reference }}</td>
                             <td>{{ item.quantity }} {{item.product.unite}}</td>
                         </tr>
                     </tbody>
@@ -88,7 +88,7 @@ export default {
                 const item = this.carts.items[i]
                 // commande items
                 const obj = {
-                    product: item.product.id,
+                    product: item.product.product.id,
                     quantity: item.quantity,
                 }
                 allItems.push(obj)

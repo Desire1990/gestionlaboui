@@ -76,22 +76,6 @@ export default {
         this.cartbon = this.$store.state.cartbon;
     },
     methods: {
-        setId(){
-          for(let commande of this.$store.state.commandes){
-            if (commande.id == this.commande.id) {
-              this.commande.num_commande = commande.num_commande;
-              return;
-            }
-          }
-        },
-        setName(){
-          for(let commande of this.$store.state.commandes){
-            if (commande.num_commande == this.commande.num_commande) {
-              this.commande.id = commande.id;
-              return;
-            }
-          }
-        },
         submitForm() {
             const allItems = []
             let data={}
