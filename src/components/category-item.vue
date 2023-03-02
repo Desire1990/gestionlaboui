@@ -3,10 +3,11 @@
   <div class="card-body">
     <center>
         <h5 class="card-title">{{category.name}}</h5>
-        <button class="btn btn-success btn-sm">
-            <router-link :to="{ name: 'product', params: {id: category.id} }">
+        <button class="btn btn-success btn-sm" @click= 'goTo(category)'>
+            <!-- <router-link :to="{ name: 'product', params: {id: category.id} }"> -->
                 products
-            </router-link></button>
+            <!-- </router-link>-->
+            </button> 
     </center>
   </div>
 </div>
@@ -39,6 +40,9 @@ export default {
         },
         decreaseQtt : function(){
             this.cart.decrease(this.item.id);
+        },
+        goTo(category){
+            this.$router.push(`/category/${category.id}/products`)
         },
         enableEdition(){
             if(this.item.quantite!=0) this.editable=true
