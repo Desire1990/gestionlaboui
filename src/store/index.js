@@ -6,9 +6,8 @@ export default new Vuex.Store({
 state: {
     user: null,
     // url:'/api',
-    // url: 'http://localhost:8000/api',
+    url: 'http://localhost:8000/api',
     // url: 'https://memoire.amidev.bi/api',
-    url: ' http://0.0.0.0:8000/api',
     users:[],
     domains:[],
     categories:[],
