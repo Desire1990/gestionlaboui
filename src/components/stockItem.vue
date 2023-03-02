@@ -6,8 +6,9 @@
   <div class="card-body">
     <center>
         <h6 class="card-subtitle">{{product.product.reference}}</h6><hr>
-        <p class="card-text"> Qte Recue:{{product.qte_livree}} {{product.unite}}</p><hr>
-        <p class="card-text"> Qte Restante:{{product.qte_restante}} {{product.unite}}</p><hr>
+        <h4 class="card-subtitle">{{product.bonLivraison.commande.departement.name}}-{{product.bonLivraison.commande.departement.decanat.name}}</h4><hr>
+        <p class="card-text"> Qte Recue:{{product.qte_livree}} {{product.product.unite}}</p><hr>
+        <p class="card-text"> Qte Restante:{{product.qte_restante}} {{product.product.unite}}</p><hr>
         <p class="text-center"><input v-model="quantity" type="float" class="form-control" placeholder="Qty" min="1"/></p>
         <button class="btn btn-success btn-sm" @click="addToCart(product)">Add To Cart </button>
     </center>
