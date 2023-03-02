@@ -1,13 +1,16 @@
 <template>
     <tr><th>{{item.product.id}}</th>
-        <th>{{item.product.produit.materiel}}</th>
-        <th>{{item.product.produit.reference}}</th>
-        <th>{{item.product.qte_livree }} {{item.product.unite }}</th>
+        <th>{{item.product.product.materiel}}</th>
+        <th>{{item.product.product.reference}}</th>
+        <th>{{item.product.qte_livree }} {{item.product.product.unite }}</th>
         <!-- <th>{{item.product.qte_restante }} {{item.product.unite }}</th> -->
          <td>  
+            <th>
             <a class="btn btn-success btn-sm" @click="decrementQuantity(item)">-</a> &nbsp;
             <a class="btn btn-success btn-sm" @click="incrementQuantity(item)">+</a> &nbsp;
-            {{ item.quantity }} {{item.product.unite }}
+            </th>
+            <th>{{ item.quantity }} {{item.product.product.unite }}</th>
+                
         </td>
         <td><button  class=" btn btn-danger btn-sm delete" @click="removeFromCart(item)">x</button></td>
 
