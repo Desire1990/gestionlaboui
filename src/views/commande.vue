@@ -6,9 +6,14 @@
 
       </div>
        <!-- <button class="btn btn-outline-success desos" @click.prevent="envoyer">Envoyer</button> -->
-       <i class="fa fa-paper-plane btn desos" @click.prevent="envoyer" aria-hidden="true"></i>
-      <br>
-		<div class="scrollable-tab" style="padding-top:10px">
+       <i v-if="$store.state.user.groups.includes('Agent Stock2')" class="fa fa-paper-plane btn desos" @click.prevent="envoye" aria-hidden="true"></i>
+       <i v-if="$store.state.user.groups.includes('Departement')" class="fa fa-paper-plane btn desos" @click.prevent="envoyer" aria-hidden="true"></i>
+       <i v-if="$store.state.user.groups.includes('Decanat')" class="fa fa-paper-plane btn desos" @click.prevent="envoyee" aria-hidden="true"></i>
+      <br><br><br><br>
+     <div v-if ="items==0">
+     	<h3 class="vide" >Pas de commande déjà effectue ...</h3>
+     </div>
+		<div class="scrollable-tab" style="padding-top:10px" v-else>
         <table class="table paiements">
           <thead>
             <tr class="panier-item">
@@ -17,28 +22,29 @@
               <th>Departement</th>
               <th>Numero de Commande</th>
               <th>Date commande</th>
-              <th>Status</th>
+              <!-- <th>Status</th> -->
               <th>Action</th>
               <th></th>
             </tr>
           </thead>
           <tbody id="paiements">
             <tr v-for="(commande, index) in items">
+            <!-- <tr v-for="(commande, index) in items" :class='status2(commande.envoyee)'> -->
               <td>{{ index+1 }}</td>
               <td>{{ commande.utilisateur.user.username }}</td>
               <td>{{ commande.utilisateur.departement.name }}</td>
               <td>{{ commande.num_commande }}</td>
               <td>{{ datetime(commande.date_commande) }}</td>
-              <td>{{commande.status}}</td>
+              <!-- <td>{{commande.status}}</td> -->
               <td>
                 <div class="btns" >
                   <!-- <i class="fa fa-edit" style="color:blue;font-size: 24px; padding-right: 10px;" aria-hidden="true" @click.prevent="showDetails(commande)"></i> -->
               		
 
                   <button @click.prevent="showDetails(commande)">Detail</button>
-                 <button style="background-color: white;"> <i class="fa fa-trash" style="color:red;font-size: 24px;" aria-hidden="true" @click.prevent="Delete(commande)"></i></button>
+                 <button v-if ="commande.envoye=='False'" style="background-color: white;"> <i class="fa fa-trash-o" style="font-size:24px;color:red"@click.prevent="Delete(commande)"></i></button>
                   
-                  <button v-if="utilisateur.is_admin" @click="gotoProduct(commande)">Creer bon</button>
+                  <button v-if="$store.state.user.groups.includes('admin')" @click="gotoProduct(commande)">Creer bon</button>
              
                 </div>
               </td>
@@ -82,10 +88,53 @@ export default{
   	}
   },
   methods: {
+    successAlert1() {  
+        this.$swal({  
+            type: 'success',  
+            title: 'Envoyer au Departement',  
+            text: 'Vos commandes sont envoyees!!!'  
+        });  
+    }, 
+    successAlert2() {  
+        this.$swal({  
+            type: 'success',  
+            title: 'Envoyer au Decanat',  
+            text: 'Vos commandes sont envoyees!!!'  
+        });  
+    }, 
+    successAlert3() {  
+        this.$swal({  
+            type: 'success',  
+            title: 'Envoyer à la direction de recherche',  
+            text: 'Vos commandes sont envoyees!!!'  
+        });  
+    },
+		status1(envoye){
+			if(envoye=='true') return "empty1";
+		},		
+		status2(envoyee){
+			if(envoyee=='true') return "empty2";
+		},
+		status3(envoyee){
+			if(envoyeee=='true') return "empty3";
+		}, 
   	envoyer(){
-  		axios.post(this.$store.state.url + '/commande/envoyer/', this.header)
+  		axios.get(this.$store.state.url + '/commande/envoyer-all/', this.header)
   		.then(response =>{
+  			this.successAlert2()
   			console.log(response.data)
+  		})
+  	},
+  	envoyee(){
+  		axios.get(this.$store.state.url + '/commande/envoyee-all/', this.header)
+  		.then(response =>{
+  			this.successAlert3()
+  		})
+  	},
+  	envoye(){
+  		axios.get(this.$store.state.url + '/commande/envoye-all/', this.header)
+  		.then(response =>{
+  			this.successAlert1()
   		})
   	},
     Delete(com) {
@@ -231,8 +280,13 @@ export default{
   display: flex;
   justify-content: center;
 }
-.empty{
-	color: red;
+.empty1{
+	background-color: rgba(0, 0, 0, 0.9); /* Color white with alpha 0.9*/
+}.empty2{
+	background-color: rgba(255, 255, 255, 0.9); /* Color white with alpha 0.9*/
+}
+.empty3{
+	background-color: rgba(255, 255, 255, 0.9); /* Color white with alpha 0.9*/
 }
 .low{
 	color:green;
