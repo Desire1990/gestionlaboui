@@ -1,10 +1,12 @@
 <template>
   <div class="products">
     <!-- <router-link  @click="$router.back()">Back</router-link> -->
+    <div>
       <router-link to="/cart-order" class="button is-success" id="cart">
         <i class="fa fa-shopping-cart" > ({{ length }})</i>
-      </router-link>
-    <h1>Mon Stock</h1><hr>
+      </router-link>      
+    </div>
+    <h1>Mon Stock</h1><br>
     <StockItem
       v-for="(product) in bonLivraisonItems.results"
       :key="product.id"
@@ -73,7 +75,6 @@ export default {
     font-size: 36px;
     color: var(--primary);
     height: 1px;
-    float: right;
-    padding-right: 100px;
+    padding-left: 50px;
   }
 </style>
