@@ -5,6 +5,20 @@ import store from './store'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import './icons'
 
+
+import VueSweetalert2 from 'vue-sweetalert2';
+
+// If you don't need the styles, do not connect
+import 'sweetalert2/dist/sweetalert2.min.css';
+
+Vue.use(VueSweetalert2);
+
+import VueApexCharts from 'vue-apexcharts'
+Vue.use(VueApexCharts)
+
+Vue.component('apexchart', VueApexCharts)
+
+
 import {
   faShoppingCart, faBoxOpen, faUsers, faChartBar, faPen,
   faTrashAlt, faCheck, faHandHoldingUsd, faPowerOff,
@@ -18,7 +32,7 @@ library.add(
   faTrashAlt, faCheck, faHandHoldingUsd, faPowerOff,
   faDownload, faUpload
 )
-Vue.component('fa', FontAwesomeIcon)
+Vue.component('fas', FontAwesomeIcon)
 Vue.mixin({
   computed:{
         header(){
