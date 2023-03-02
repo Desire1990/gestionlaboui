@@ -7,9 +7,20 @@
 			<form method="post">
 				<div class="inline_field">
 					<div class="field">
-						<label for="lg_qtt">Quantite in Stock {{ produit.quantite }}{{ produit.unite }}:</label>
+						<label for="lg_qtt">Quantite in Stock</label>
 						<input type="number" v-model="new_produit.quantite" id="lg_qtt">
 					</div>
+				<div class="field">
+					<label for="id_entrant">Unité :</label>
+					<select name="unite" id="" v-model="new_produit.unite" value="Selectionnez l'unite">
+					<option disabled value="Selectionnez l'unite">Selectionnez l'unite ...</option>
+					  <option>kg</option>
+					  <option>g</option>
+					  <option>pc(s)</option>
+					  <option>l</option>
+					  <option>ml</option>
+					</select>		
+				</div>
 				</div>
 				<div class="buttons">
 					<input type="submit" @click="submit" value="submit">
