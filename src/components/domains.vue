@@ -7,7 +7,7 @@
 	    <transition-group name="image-wrapper" tag="div" class="images-inner">
 	      <div class="image-wrapper" v-for="(image, i) in items.results" :key="image.id + i" @click="goTo(image)">
 	        <div class="image-img">
-	        <img :src=" 'https://memoire.amidev.bi' + image.get_thumbnail" class="card-img-top" alt="image.name" />
+	        <img :src=" 'https://memoire.hogi.edu.bi' + image.get_thumbnail" class="card-img-top" alt="image.name" />
           <!-- <img :src=" 'http://127.0.0.1:8000' + image.get_thumbnail" class="card-img-top" alt="image.name" /> -->
 	        </div>
 	        <div class="image-details">
